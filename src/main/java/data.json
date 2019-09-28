@@ -1,0 +1,11 @@
+{
+  "question1": {
+    "variants": [
+      "smth",
+      "smth1",
+      "smth2",
+      "smth3"
+    ],
+    "correct": "smth2"
+  }
+}
