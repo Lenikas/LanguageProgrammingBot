@@ -2,6 +2,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import java.io.FileNotFoundException;
+import java.util.Random;
+import org.json.simple.parser.ParseException;
 
 public class Bot {
 
@@ -33,15 +40,17 @@ public class Bot {
         System.out.println(question);
     }
 
-    public static void createAnswers(String[] answers) {
+    public static void createAnswers(JSONArray answers) {
         //сюда парсить массив вариантов ответов из Json/XML
-        for (String answer : answers) System.out.println(answer);
+        for (Object answer : answers) System.out.println(answer);
     }
 
     public static void processAnswer(String answer) {
         //здесь должна быть проверка на соответствие ответа введенного пользователем и правильного из Json/XML
-
-        if (answer.equals(new String("b"))) {
+        Scanner in = new Scanner(System.in);
+        System.out.print("Input a number: ");
+        String num = in.nextLine();
+        if (answer.equals(num)) {
             System.out.println("Yes, you right!");
         }
         else {
@@ -50,17 +59,25 @@ public class Bot {
     }
 
     public static void readJson() {
-        //метод чтения текста из json файла,осталось его распарсить
-        //этот метод читает файл и выводит на консоль, можно сделать чтобы он возвращал строку json и ее уже парсить
-        //этот метод можно перенести в класс,где будут методы работы с json
-        try(FileReader reader = new FileReader("data.json"))
+        JSONParser parser = new JSONParser();
+        try(FileReader reader = new FileReader("C:\\Users\\Дмитрий\\LanguageProgrammingBot\\src\\main\\java\\data.json"))
         {
-            int c;
-            while((c=reader.read())!=-1){
-                System.out.print((char)c);
-            }
-        }
-        catch (IOException e) {
+            Object obj = parser.parse(reader);
+            JSONObject jsonObject = (JSONObject) obj;
+            Random random = new Random();
+            int number = random.nextInt(4);
+            JSONObject name = (JSONObject)jsonObject.get(Integer.toString(number));
+            String question = (String)name.get("question");
+            createQuestion(question);
+            JSONArray variants = (JSONArray)name.get("variants");
+            createAnswers(variants);
+            String correct = (String)name.get("correct");
+            processAnswer(correct);
+        }catch (FileNotFoundException e) {
+           e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
     }

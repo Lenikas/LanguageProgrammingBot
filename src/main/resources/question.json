@@ -1,5 +1,6 @@
 {
-  "question1": {
+  "number": {
+    "question": "question",
     "variants": [
       "smth",
       "smth1",

@@ -1,11 +1,42 @@
 {
-  "question1": {
+  "0": {
+    "question": "a",
     "variants": [
       "smth",
       "smth1",
       "smth2",
       "smth3"
     ],
-    "correct": "smth2"
+    "correct": "1"
+  },
+  "1": {
+    "question": "b",
+    "variants": [
+      "smth",
+      "smth1",
+      "smth2",
+      "smth3"
+    ],
+    "correct": "2"
+  },
+  "2": {
+    "question": "c",
+    "variants": [
+      "smth",
+      "smth1",
+      "smth2",
+      "smth3"
+    ],
+    "correct": "3"
+  },
+  "3": {
+    "question": "d",
+    "variants": [
+      "smth",
+      "smth1",
+      "smth2",
+      "smth3"
+    ],
+    "correct": "4"
   }
 }
