@@ -1,42 +1,53 @@
 {
   "0": {
-    "question": "a",
+    "question": "Что выведет данный код: print(2 + 3)",
     "variants": [
-      "smth",
-      "smth1",
-      "smth2",
-      "smth3"
+      "1) 2",
+      "2) 3",
+      "3) 2 + 3",
+      "4) 5"
     ],
-    "correct": "1"
+    "correct": "4"
   },
   "1": {
-    "question": "b",
+    "question": "Какой из этих типов неизменяемый?",
     "variants": [
-      "smth",
-      "smth1",
-      "smth2",
-      "smth3"
+      "1) list()",
+      "2) tuple()",
+      "3) dictionary()",
+      "4) set()"
     ],
     "correct": "2"
   },
   "2": {
-    "question": "c",
+    "question": "Что можно добавить в set()?",
     "variants": [
-      "smth",
-      "smth1",
-      "smth2",
-      "smth3"
+      "1) list()",
+      "2) ([],)",
+      "3) ()",
+      "4) {}"
     ],
     "correct": "3"
   },
-  "3": {
-    "question": "d",
+  "4": {
+    "question": "Какой метод есть в генераторе?",
     "variants": [
-      "smth",
-      "smth1",
-      "smth2",
-      "smth3"
+      "1) __open__",
+      "2) open",
+      "3) throw",
+      "4) read"
+    ],
+    "correct": "3"
+  },
+  "5": {
+    "question": "Какой метод есть в итераторе?",
+    "variants": [
+      "1) send",
+      "2) __close__",
+      "3) iter",
+      "4) __next__"
     ],
     "correct": "4"
   }
 }
+
