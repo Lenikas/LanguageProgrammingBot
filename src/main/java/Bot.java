@@ -1,4 +1,5 @@
 import java.io.*;
+import java.net.URL;
 import java.util.Scanner;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -43,6 +44,7 @@ public class Bot {
     public static void createAnswers(JSONArray answers) {
         //сюда парсить массив вариантов ответов из Json/XML
         for (Object answer : answers) System.out.println(answer);
+
     }
 
     public static void processAnswer(String correctAnswer) {
@@ -91,6 +93,4 @@ public class Bot {
         createAnswers(variants);
         processAnswer(correctAnswer);
     }
-
-
 }
