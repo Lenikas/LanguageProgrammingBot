@@ -1,6 +1,5 @@
 import interactive.console.ConsoleInteractive;
 import interactive.Interactive;
-import org.json.simple.JSONArray;
 import java.util.Random;
 
 public class StartBot {

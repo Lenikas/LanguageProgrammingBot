@@ -3,17 +3,19 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileReader;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class WorkWithJson {
-    public static Question[] readJson() {
+
+    public Question[] readJson() {
         /* сейчас этот метод возвращает список экззэмпляров класса Question */
         JSONParser parser = new JSONParser();
-        //try(FileReader reader = new FileReader("C:\\Users\\Леня\\Desktop\\lenika\\JavaBot\\LanguageProgrammingBot\\src\\main\\java\\data.json"))
-        try(FileReader reader = new FileReader("C:\\Users\\Дмитрий\\LanguageProgrammingBot\\src\\main\\java\\data.json"))
+        try(BufferedReader bReader = new BufferedReader(new InputStreamReader(
+                this.getClass().getResourceAsStream("/" + "question.json"))))
         {
-            Object obj = parser.parse(reader);
+            Object obj = parser.parse(bReader);
             JSONObject jsonObject = (JSONObject) obj;
             Question[] listOfQuestionTo = new Question[jsonObject.size()];
             for (int i = 0; i < jsonObject.size(); i++){
