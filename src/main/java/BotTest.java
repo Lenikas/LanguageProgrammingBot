@@ -1,4 +1,3 @@
-
 import org.json.simple.JSONArray;
 import org.junit.jupiter.api.Test;
 
