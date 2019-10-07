@@ -1,6 +1,8 @@
+package all;
+
 import org.json.simple.JSONArray;
 
-import java.util.Random;
+
 
 public class Question {
     private String question;

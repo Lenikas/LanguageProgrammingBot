@@ -1,13 +1,16 @@
+package all;
+
 import interactive.console.ConsoleInteractive;
 import interactive.Interactive;
 import java.util.Random;
+
 
 public class StartBot {
 
     public static void main(String[] args) {
         Bot newBot = new Bot();
-        String command = newBot.readMessage();
-        Boolean IsStart = newBot.processCommand(command);
+        String command = Bot.readMessage();
+        Boolean IsStart = Bot.processCommand(command);
         WorkWithJson readJson = new WorkWithJson();
         Question[] array = readJson.readJson();
         while (true & IsStart) {
