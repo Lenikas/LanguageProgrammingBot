@@ -11,11 +11,11 @@ import java.io.InputStreamReader;
 
 public class WorkWithJson {
 
-    public Question[] readJson() {
+    public static Question[] readJson() {
         /* сейчас этот метод возвращает список экззэмпляров класса Question */
         JSONParser parser = new JSONParser();
         try(BufferedReader bReader = new BufferedReader(new InputStreamReader(
-                this.getClass().getResourceAsStream("/" + "question.json"))))
+                WorkWithJson.class.getResourceAsStream("/" + "question.json"))))
         {
             Object obj = parser.parse(bReader);
             JSONObject jsonObject = (JSONObject) obj;

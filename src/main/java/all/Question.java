@@ -5,9 +5,9 @@ import org.json.simple.JSONArray;
 
 
 public class Question {
-    private String question;
-    private JSONArray variants;
-    private String correct;
+    public String question;
+    public JSONArray variants;
+    public String correct;
     public void createQuestion(String inQuestion, JSONArray inVariants, String inCorrect)
     {
         question = inQuestion;
@@ -20,4 +20,13 @@ public class Question {
         for (Object answer : variants) System.out.println(answer);
         User.responseVerification(correct);
     }
+
+    public  StringBuilder formatAnswers() {
+        StringBuilder result = new StringBuilder();
+        for (Object answer : variants) {
+            result.append(answer).append("\n");
+        }
+        return result;
+    }
+
 }
