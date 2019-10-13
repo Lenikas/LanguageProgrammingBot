@@ -20,22 +20,35 @@ public class BotT extends TelegramLongPollingBot {
     private static final String TOKEN = "902378125:AAFC9rH07vmI4r6yGokf_Wrk3gMVZBKdEa0";
     private static final String USERNAME = "@language_programming_bot";
     private static final Question[] data = WorkWithJson.readJson();
+    public static int index = -1;
+    public static long chatId = -1;
     @Override
     public void onUpdateReceived(Update update) {
-        Random random = new Random();
-        int index = random.nextInt(data.length);
+        //index = -1;
         if (update.hasMessage()) {
             if (update.getMessage().hasText()) {
                 if (update.getMessage().getText().equals("/start")) {
                     try {
-                        execute(sendInlineKeyboardMessage(update.getMessage().getChatId(), getRandomQuestionWithAnswers(index)));
-                    } catch (TelegramApiException e) {
+                        chatId = update.getMessage().getChatId();
+                        execute(sendInlineKeyboardMessage(chatId, getRandomQuestionWithAnswers(index)));
+                    }catch (TelegramApiException e) {
                         e.printStackTrace();
                     }
                 }
             }
-        } else if (update.hasCallbackQuery()) {
+        }
+        try {
+            execute(new SendMessage().setText("").setChatId(update.getCallbackQuery().getMessage().getChatId()));
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+        if (update.hasCallbackQuery()) {
             processCallBack(update, index);
+        }
+        try {
+            execute(sendInlineKeyboardMessage(chatId, getRandomQuestionWithAnswers(index)));
+        }catch (TelegramApiException e) {
+            e.printStackTrace();
         }
     }
 
@@ -62,11 +75,13 @@ public class BotT extends TelegramLongPollingBot {
         return new SendMessage().setChatId(chatId).setText(question).setReplyMarkup(inlineKM);
     }
 
-    private static String getRandomQuestionWithAnswers(Integer index) {
+    private static String getRandomQuestionWithAnswers(Integer ind) {
+        Random random = new Random();
+        index = random.nextInt(data.length);
         return data[index].question + "\n" + data[index].formatAnswers();
     }
 
-    private void processCallBack(Update update, Integer index) {
+    private void processCallBack(Update update, Integer ind) {
         SendMessage userAnswer = new SendMessage().setText(update.getCallbackQuery().getData()).setChatId(update.getCallbackQuery().getMessage().getChatId());
         if (userAnswer.getText().equals(data[index].correct)) {
             try {
