@@ -1,6 +1,7 @@
 package telegram;
 
 import all.Question;
+import all.User;
 import all.WorkWithJson;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -9,10 +10,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 
 public class BotT extends TelegramLongPollingBot {
@@ -20,33 +18,37 @@ public class BotT extends TelegramLongPollingBot {
     private static final String TOKEN = "902378125:AAFC9rH07vmI4r6yGokf_Wrk3gMVZBKdEa0";
     private static final String USERNAME = "@language_programming_bot";
     private static final Question[] data = WorkWithJson.readJson();
-    public static int index = -1;
-    public static long chatId = -1;
+    public static Map<Long, Integer> map = new HashMap<Long, Integer>();
     @Override
     public void onUpdateReceived(Update update) {
-        //index = -1;
+        long chatId = -1;
         if (update.hasMessage()) {
             if (update.getMessage().hasText()) {
                 if (update.getMessage().getText().equals("/start")) {
                     try {
                         chatId = update.getMessage().getChatId();
-                        execute(sendInlineKeyboardMessage(chatId, getRandomQuestionWithAnswers(index)));
+                        execute(sendInlineKeyboardMessage(chatId, getRandomQuestionWithAnswers(chatId)));
                     }catch (TelegramApiException e) {
                         e.printStackTrace();
                     }
                 }
+                else if (update.getMessage().getText().equals("/stop")) {
+                    map.remove(chatId);
+                    return;
+                }
             }
         }
         try {
-            execute(new SendMessage().setText("").setChatId(update.getCallbackQuery().getMessage().getChatId()));
+            chatId = update.getCallbackQuery().getMessage().getChatId();
+            execute(new SendMessage().setText("").setChatId(chatId));
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
         if (update.hasCallbackQuery()) {
-            processCallBack(update, index);
+            processCallBack(update, chatId);
         }
         try {
-            execute(sendInlineKeyboardMessage(chatId, getRandomQuestionWithAnswers(index)));
+            execute(sendInlineKeyboardMessage(chatId, getRandomQuestionWithAnswers(chatId)));
         }catch (TelegramApiException e) {
             e.printStackTrace();
         }
@@ -75,21 +77,22 @@ public class BotT extends TelegramLongPollingBot {
         return new SendMessage().setChatId(chatId).setText(question).setReplyMarkup(inlineKM);
     }
 
-    private static String getRandomQuestionWithAnswers(Integer ind) {
+    private static String getRandomQuestionWithAnswers(Long chatId) {
         Random random = new Random();
-        index = random.nextInt(data.length);
-        return data[index].question + "\n" + data[index].formatAnswers();
+        map.remove(chatId);
+        map.put(chatId, random.nextInt(data.length));
+        return data[map.get(chatId)].question + "\n" + data[map.get(chatId)].formatAnswers();
     }
 
-    private void processCallBack(Update update, Integer ind) {
+    private void processCallBack(Update update, Long chatId) {
         SendMessage userAnswer = new SendMessage().setText(update.getCallbackQuery().getData()).setChatId(update.getCallbackQuery().getMessage().getChatId());
-        if (userAnswer.getText().equals(data[index].correct)) {
+        if (userAnswer.getText().equals(data[map.get(chatId)].correct)) {
             try {
                 execute(new SendMessage().setText("Yes, you right").setChatId(update.getCallbackQuery().getMessage().getChatId()));
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
-        } else if (!userAnswer.getText().equals(data[index].correct)){
+        } else if (!userAnswer.getText().equals(data[map.get(chatId)].correct)){
             try {
                 execute(new SendMessage().setText("No, you not right").setChatId(update.getCallbackQuery().getMessage().getChatId()));
             } catch (TelegramApiException e) {
