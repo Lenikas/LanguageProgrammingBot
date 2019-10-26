@@ -11,11 +11,11 @@ import java.io.InputStreamReader;
 
 public class WorkWithJson {
 
-    public static Question[] readJson() {
+    public static Question[] readJson(String theme) {
         /* сейчас этот метод возвращает список экззэмпляров класса Question */
         JSONParser parser = new JSONParser();
         try(BufferedReader bReader = new BufferedReader(new InputStreamReader(
-                WorkWithJson.class.getResourceAsStream("/" + "question.json"))))
+                WorkWithJson.class.getResourceAsStream("/" + theme))))
         {
             Object obj = parser.parse(bReader);
             JSONObject jsonObject = (JSONObject) obj;
@@ -23,7 +23,7 @@ public class WorkWithJson {
             for (int i = 0; i < jsonObject.size(); i++){
                 Question ques = new Question();
                 JSONObject name = (JSONObject) jsonObject.get(Integer.toString(i));
-                ques.createQuestion((String) name.get("question"), (JSONArray) name.get("variants"),  (String) name.get("correct"));
+                ques.createQuestion((String) name.get("question"), (JSONArray) name.get("variants"),  (String) name.get("correct"), (String) name.get("link"));
                 listOfQuestionTo[i] = ques;
             }
             return listOfQuestionTo;
