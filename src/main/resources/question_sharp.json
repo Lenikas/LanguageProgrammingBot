@@ -1,6 +1,6 @@
 {
   "0": {
-    "question": "Что выведет данный код: print(2 + 3)",
+    "question": "sЧто выведет данный код: print(2 + 3)",
     "link": "https://metanit.com/python/tutorial/2.3.php",
     "variants": [
       "1) 2",
@@ -11,7 +11,7 @@
     "correct": "4"
   },
   "1": {
-    "question": "Какой из этих типов неизменяемый?",
+    "question": "sКакой из этих типов неизменяемый?",
     "link": "https://www.ibm.com/developerworks/ru/library/l-python_details_02/",
     "variants": [
       "1) list()",
@@ -22,7 +22,7 @@
     "correct": "2"
   },
   "2": {
-    "question": "Что можно добавить в set()?",
+    "question": "sЧто можно добавить в set()?",
     "link": "https://pythonworld.ru/tipy-dannyx-v-python/mnozhestva-set-i-frozenset.html",
     "variants": [
       "1) list()",
@@ -33,7 +33,7 @@
     "correct": "3"
   },
   "3": {
-    "question": "Какой метод есть в генераторе?",
+    "question": "sКакой метод есть в генераторе?",
     "link": "https://pythonz.net/references/named/generator/",
     "variants": [
       "1) __open__",
@@ -44,7 +44,7 @@
     "correct": "3"
   },
   "4": {
-    "question": "Какой метод есть в итераторе?",
+    "question": "sКакой метод есть в итераторе?",
     "link": "https://devpractice.ru/python-lesson-15-iterators-and-generators/",
     "variants": [
       "1) send",
