@@ -33,11 +33,4 @@ public class WorkWithJson {
             return new Question[0];
         }
     }
-
-    //public static void doLoopOneQuestion(Question[] listOfQuestionTo) {
-    //    Random random = new Random();
-    //   int number = random.nextInt(listOfQuestionTo.length);
-    //   Question question = listOfQuestionTo[number];
-    //    question.withdrawTheQuestion();
-    //}
 }

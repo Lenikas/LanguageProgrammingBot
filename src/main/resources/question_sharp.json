@@ -1,7 +1,7 @@
 {
   "0": {
-    "question": "sЧто выведет данный код: print(2 + 3)",
-    "link": "https://metanit.com/python/tutorial/2.3.php",
+    "question": "Что выведет данный код: Сonsole.WriteLine(2 + 3)?",
+    "link": "https://metanit.com/sharp/tutorial/2.3.php",
     "variants": [
       "1) 2",
       "2) 3",
@@ -11,48 +11,48 @@
     "correct": "4"
   },
   "1": {
-    "question": "sКакой из этих типов неизменяемый?",
-    "link": "https://www.ibm.com/developerworks/ru/library/l-python_details_02/",
+    "question": "Что называют точкой входа в программу?",
+    "link": "https://metanit.com/sharp/tutorial/1.5.php",
     "variants": [
-      "1) list()",
-      "2) tuple()",
-      "3) dictionary()",
-      "4) set()"
+      "1) метод Main()",
+      "2) первая строчка кода",
+      "3) первый метод в файле с кодом",
+      "4) в C# нет такого понятия"
     ],
-    "correct": "2"
+    "correct": "1"
   },
   "2": {
-    "question": "sЧто можно добавить в set()?",
-    "link": "https://pythonworld.ru/tipy-dannyx-v-python/mnozhestva-set-i-frozenset.html",
+    "question": "Какой тип переменной используется в коде: int a = 5?",
+    "link": "https://metanit.com/sharp/tutorial/2.1.php",
     "variants": [
-      "1) list()",
-      "2) ([],)",
-      "3) ()",
-      "4) {}"
+      "1) знаковое 32-бит целое",
+      "2) знаковое 64-бит целое",
+      "3) знаковое 8-бит целое",
+      "4) знаковое 16-бит целое"
     ],
-    "correct": "3"
+    "correct": "1"
   },
   "3": {
-    "question": "sКакой метод есть в генераторе?",
-    "link": "https://pythonz.net/references/named/generator/",
+    "question": "Что делает оператор %?",
+    "link": "https://metanit.com/sharp/tutorial/2.3.php",
     "variants": [
-      "1) __open__",
-      "2) open",
-      "3) throw",
-      "4) read"
+      "1) возвращает остаток от деления",
+      "2) возвращает процент от суммы",
+      "3) возвращает тригонометрическую функцию",
+      "4) ничего из вышеперечисленного"
     ],
-    "correct": "3"
+    "correct": "1"
   },
   "4": {
-    "question": "sКакой метод есть в итераторе?",
-    "link": "https://devpractice.ru/python-lesson-15-iterators-and-generators/",
+    "question": "Какой тип данных нужно использовать, если нужно несколько раз именять строку?",
+    "link": "https://metanit.com/sharp/tutorial/7.3.php",
     "variants": [
-      "1) send",
-      "2) __close__",
-      "3) iter",
-      "4) __next__"
+      "1) char",
+      "2) string",
+      "3) StringBuilder",
+      "4) object"
     ],
-    "correct": "4"
+    "correct": "3"
   }
 }
 
