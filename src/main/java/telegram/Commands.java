@@ -19,7 +19,7 @@ class Commands {
         if (update.getMessage().getText().equals("/stop")) {
             return processStopCommand(update, map);
         }
-        return new SendMessage().setText("Неопознанная команда!").setChatId(update.getMessage().getChatId());
+        return new SendMessage().setText("Неопознанная команда! Используйте /help для просмотра доступнных комманд.").setChatId(update.getMessage().getChatId());
     }
 
     private static SendMessage processHelpCommand(Update update) {
@@ -39,7 +39,7 @@ class Commands {
         Long chatId = update.getMessage().getChatId();
         map.remove(chatId);
         DataUser newUser = new DataUser();
-        newUser.index = -1;
+        newUser.setIndex(-1);
         map.put(chatId, newUser);
         //плохо, что тут используется метод из другого класса
         return Buttons.sendInlineKeyboardMessage(chatId,"По какому языку вы хотите тест?", buttonsChoseTheme);

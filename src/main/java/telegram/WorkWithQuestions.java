@@ -5,6 +5,8 @@ import all.Question;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import java.lang.reflect.Array;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -14,7 +16,7 @@ class WorkWithQuestions {
         SendMessage userAnswer = new SendMessage().setText(update.getCallbackQuery().getData()).setChatId(update.getCallbackQuery().getMessage().getChatId());
         if (userAnswer.getText().equals("Python")) {
             map.get(chatId).currentData = data_py;
-        } else if (userAnswer.getText().equals("C#")){
+        } else if (userAnswer.getText().equals("C#")) {
             map.get(chatId).currentData  = data_sharp;
         }
     }
@@ -22,13 +24,14 @@ class WorkWithQuestions {
      static String getRandomQuestionWithAnswers(Long chatId, Map<Long, DataUser> map) {
         Random random = new Random();
         DataUser newUser = new DataUser();
-        newUser.index = random.nextInt(map.get(chatId).currentData.length);
-        newUser.currentData = map.get(chatId).currentData;
+        newUser.setCurrentData(map.get(chatId).currentData);
+        newUser.setIndex(random.nextInt(map.get(chatId).currentData.length));
         map.remove(chatId);
         map.put(chatId, newUser);
         return map.get(chatId).currentData[map.get(chatId).index].question + "\n"
                 + map.get(chatId).currentData[map.get(chatId).index].formatAnswers();
     }
+
 
     static SendMessage processAnswerQuestion(Update update, Long chatId, Map<Long, DataUser> map) {
         SendMessage userAnswer =

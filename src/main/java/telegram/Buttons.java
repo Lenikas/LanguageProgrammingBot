@@ -13,7 +13,8 @@ class Buttons {
         InlineKeyboardMarkup inlineKM = new InlineKeyboardMarkup();
         List<InlineKeyboardButton> keyboardButtonsRow = new ArrayList<>();
         for (int i = 0; i < dataButtons.size(); i++) {
-            InlineKeyboardButton button = new InlineKeyboardButton().setText(dataButtons.get(i)).setCallbackData(dataButtons.get(i));
+            InlineKeyboardButton button = new InlineKeyboardButton()
+                    .setText(dataButtons.get(i)).setCallbackData(dataButtons.get(i));
             keyboardButtonsRow.add(button);
         }
         List<List<InlineKeyboardButton>> rowList = new ArrayList<>();

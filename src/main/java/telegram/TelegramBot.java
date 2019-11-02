@@ -3,11 +3,14 @@ package telegram;
 import all.DataUser;
 import all.Question;
 import all.WorkWithJson;
+import org.apache.logging.log4j.LogManager;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.util.*;
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 
 
 public class TelegramBot extends TelegramLongPollingBot {
@@ -20,8 +23,11 @@ public class TelegramBot extends TelegramLongPollingBot {
     private static ArrayList<String> buttonsAnswerQuestion = new ArrayList<>(Arrays.asList("1", "2", "3", "4"));
     private static ArrayList<String> buttonsChoseTheme = new ArrayList<>(Arrays.asList("Python", "C#"));
 
+
+
     @Override
     public void onUpdateReceived(Update update) {
+
         long chatId = -1;
         if (update.hasMessage()) {
             if (update.getMessage().hasText()) {
@@ -52,7 +58,6 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
-
     @Override
     public String getBotUsername() {
         return USERNAME;
@@ -62,7 +67,5 @@ public class TelegramBot extends TelegramLongPollingBot {
     public String getBotToken() {
         return TOKEN;
     }
-
-
 
 }

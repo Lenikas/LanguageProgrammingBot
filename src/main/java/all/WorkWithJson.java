@@ -23,7 +23,8 @@ public class WorkWithJson {
             for (int i = 0; i < jsonObject.size(); i++){
                 Question ques = new Question();
                 JSONObject name = (JSONObject) jsonObject.get(Integer.toString(i));
-                ques.createQuestion((String) name.get("question"), (JSONArray) name.get("variants"),  (String) name.get("correct"), (String) name.get("link"));
+                ques.createQuestion((String) name.get("question"), (JSONArray) name.get("variants"),
+                        (String) name.get("correct"), (String) name.get("link"));
                 listOfQuestionTo[i] = ques;
             }
             return listOfQuestionTo;

@@ -1,11 +1,13 @@
 package telegram;
 
+import org.apache.log4j.Logger;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 
 public class BotInitializer {
+    static Logger log = Logger.getLogger(BotInitializer.class.getName());
 
     public static void main(String[] args) {
 
@@ -15,7 +17,7 @@ public class BotInitializer {
         try {
             botapi.registerBot(bot);
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            log.info(e);
         }
     }
 }
