@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 
 public class BotInitializer {
-    static Logger log = Logger.getLogger(BotInitializer.class.getName());
+    private static Logger log = Logger.getLogger(BotInitializer.class.getName());
 
     public static void main(String[] args) {
 

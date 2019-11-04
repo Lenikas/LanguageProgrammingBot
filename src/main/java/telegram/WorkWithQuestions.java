@@ -12,13 +12,15 @@ import java.util.Random;
 
 class WorkWithQuestions {
 
-     static void answerOfCheckLanguage(Update update, Long chatId, Map<Long, DataUser> map, Question[] data_py, Question[] data_sharp) {
+     static Question[] answerOfCheckLanguage(Update update, Question[] data_py, Question[] data_sharp) {
         SendMessage userAnswer = new SendMessage().setText(update.getCallbackQuery().getData()).setChatId(update.getCallbackQuery().getMessage().getChatId());
         if (userAnswer.getText().equals("Python")) {
-            map.get(chatId).currentData = data_py;
-        } else if (userAnswer.getText().equals("C#")) {
-            map.get(chatId).currentData  = data_sharp;
+            return data_py;
         }
+//        } else if (userAnswer.getText().equals("C#")) {
+//             return data_sharp;
+//        }
+        return data_sharp;
     }
 
      static String getRandomQuestionWithAnswers(Long chatId, Map<Long, DataUser> map) {

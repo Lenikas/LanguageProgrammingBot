@@ -31,17 +31,42 @@ public class TelegramBot extends TelegramLongPollingBot {
         long chatId = -1;
         if (update.hasMessage()) {
             if (update.getMessage().hasText()) {
-                try {
-                    execute(Commands.processCommand(update, map, buttonsChoseTheme));
-                } catch (TelegramApiException e) {
-                    e.printStackTrace();
+                if (update.getMessage().getText().equals("/help")) {
+                    try {
+                        SendMessage message = Commands.processHelpCommand(update);
+                        execute(message);
+                    } catch (TelegramApiException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (update.getMessage().getText().equals("/start")) {
+                    try {
+                        chatId = update.getMessage().getChatId();
+                        map.remove(chatId);
+                        DataUser newUser = new DataUser(-1);
+                        map.put(chatId, newUser);
+                        execute(Buttons.sendInlineKeyboardMessage(chatId,"По какому языку вы хотите тест?", buttonsChoseTheme));
+                    } catch (TelegramApiException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (update.getMessage().getText().equals("/stop")) {
+                    try {
+                        chatId = update.getMessage().getChatId();
+                        map.remove(chatId);
+                        execute(new SendMessage().setText("Вы прервали работу бота, чтобы начать снова, введите команду /start").setChatId(chatId));
+                    } catch (TelegramApiException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
         if (update.hasCallbackQuery()) {
             chatId = update.getCallbackQuery().getMessage().getChatId();
+            //в чем тут смысл я не догнал
             if (map.get(chatId).index == -1) {
-                WorkWithQuestions.answerOfCheckLanguage(update, chatId, map, data_py, data_sharp);
+                map.get(chatId).currentData = WorkWithQuestions.answerOfCheckLanguage(update, data_py, data_sharp);
+                //WorkWithQuestions.answerOfCheckLanguage(update, chatId, map, data_py, data_sharp);
             }
             else {
                 try {
