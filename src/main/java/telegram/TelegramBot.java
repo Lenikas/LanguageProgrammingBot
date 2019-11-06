@@ -27,46 +27,20 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-
         long chatId = -1;
         if (update.hasMessage()) {
             if (update.getMessage().hasText()) {
-                if (update.getMessage().getText().equals("/help")) {
-                    try {
-                        SendMessage message = Commands.processHelpCommand(update);
-                        execute(message);
-                    } catch (TelegramApiException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (update.getMessage().getText().equals("/start")) {
-                    try {
-                        chatId = update.getMessage().getChatId();
-                        map.remove(chatId);
-                        DataUser newUser = new DataUser(-1);
-                        map.put(chatId, newUser);
-                        execute(Buttons.sendInlineKeyboardMessage(chatId,"По какому языку вы хотите тест?", buttonsChoseTheme));
-                    } catch (TelegramApiException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (update.getMessage().getText().equals("/stop")) {
-                    try {
-                        chatId = update.getMessage().getChatId();
-                        map.remove(chatId);
-                        execute(new SendMessage().setText("Вы прервали работу бота, чтобы начать снова, введите команду /start").setChatId(chatId));
-                    } catch (TelegramApiException e) {
-                        e.printStackTrace();
-                    }
+                try {
+                    execute(processCommand(update, map, buttonsChoseTheme));
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
                 }
             }
         }
         if (update.hasCallbackQuery()) {
             chatId = update.getCallbackQuery().getMessage().getChatId();
-            //в чем тут смысл я не догнал
             if (map.get(chatId).index == -1) {
                 map.get(chatId).currentData = WorkWithQuestions.answerOfCheckLanguage(update, data_py, data_sharp);
-                //WorkWithQuestions.answerOfCheckLanguage(update, chatId, map, data_py, data_sharp);
             }
             else {
                 try {
@@ -75,11 +49,15 @@ public class TelegramBot extends TelegramLongPollingBot {
                     e.printStackTrace();
                 }
             }
-        }
-        try {
-            execute(Buttons.sendInlineKeyboardMessage(chatId, WorkWithQuestions.getRandomQuestionWithAnswers(chatId, map), buttonsAnswerQuestion));
-        }catch (TelegramApiException e) {
-            e.printStackTrace();
+            try {
+                Random random = new Random();
+                DataUser user = map.get(chatId);
+                user.setIndex(random.nextInt(user.currentData.length));
+                map.replace(chatId, user);
+                execute(Buttons.sendInlineKeyboardMessage(chatId, WorkWithQuestions.getRandomQuestionWithAnswers(chatId, map), buttonsAnswerQuestion));
+            }catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -91,6 +69,24 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Override
     public String getBotToken() {
         return TOKEN;
+    }
+
+    private static SendMessage processCommand(Update update, Map<Long, DataUser> map, ArrayList<String> buttonsChoseTheme) {
+        if (update.getMessage().getText().equals("/help")) {
+            return Commands.processHelpCommand(update);
+        }
+        if (update.getMessage().getText().equals("/start")) {
+            DataUser newUser = new DataUser(-1);
+            Long chatId = update.getMessage().getChatId();
+            map.put(chatId, newUser);
+            return Commands.processStartCommand(update,buttonsChoseTheme);
+        }
+        if (update.getMessage().getText().equals("/stop")) {
+            Long chatId = update.getMessage().getChatId();
+            map.remove(chatId);
+            return Commands.processStopCommand(update);
+        }
+        return new SendMessage().setText("Неопознанная команда! Используйте /help для просмотра доступнных комманд.").setChatId(update.getMessage().getChatId());
     }
 
 }

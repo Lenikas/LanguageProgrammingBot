@@ -9,18 +9,7 @@ import java.util.Map;
 
 class Commands {
 
-//    static SendMessage processCommand(Update update, Map<Long, DataUser> map, ArrayList<String> buttonsChoseTheme ) {
-//        if (update.getMessage().getText().equals("/help")) {
-//            return processHelpCommand(update);
-//        }
-//        if (update.getMessage().getText().equals("/start")) {
-//            return processStartCommand(update, map,buttonsChoseTheme);
-//        }
-//        if (update.getMessage().getText().equals("/stop")) {
-//            return processStopCommand(update, map);
-//        }
-//        return new SendMessage().setText("Неопознанная команда! Используйте /help для просмотра доступнных комманд.").setChatId(update.getMessage().getChatId());
-//    }
+
 
     static SendMessage processHelpCommand(Update update) {
         SendMessage message = getCommandsForHelp();
@@ -29,20 +18,19 @@ class Commands {
         return message;
     }
 
-//    private static SendMessage processStopCommand(Update update, Map<Long, DataUser> map) {
-//        Long chatId = update.getMessage().getChatId();
+    static SendMessage processStopCommand(Update update) {
+        Long chatId = update.getMessage().getChatId();
 //        map.remove(chatId);
-//        return new SendMessage().setText("Вы прервали работу бота, чтобы начать снова, введите команду /start").setChatId(chatId);
-//    }
-//
-//    private static SendMessage processStartCommand(Update update, Map<Long, DataUser> map, ArrayList<String> buttonsChoseTheme) {
-//        Long chatId = update.getMessage().getChatId();
+        return new SendMessage().setText("Вы прервали работу бота, чтобы начать снова, введите команду /start").setChatId(chatId);
+    }
+
+    static SendMessage processStartCommand(Update update, ArrayList<String> buttonsChoseTheme) {
+        Long chatId = update.getMessage().getChatId();
 //        map.remove(chatId);
 //        DataUser newUser = new DataUser(-1);
 //        map.put(chatId, newUser);
-//        //плохо, что тут используется метод из другого класса
-//        return Buttons.sendInlineKeyboardMessage(chatId,"По какому языку вы хотите тест?", buttonsChoseTheme);
-//    }
+        return Buttons.sendInlineKeyboardMessage(chatId,"По какому языку вы хотите тест?", buttonsChoseTheme);
+    }
 
     private static SendMessage getCommandsForHelp() {
         String text = "This is a list of commands bot:" + "\n" +
