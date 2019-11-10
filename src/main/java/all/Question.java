@@ -17,6 +17,15 @@ public class Question {
         link = inLink;
     }
 
+    public Question(String inQuestion, JSONArray inVariants, String inCorrect, String inLink) {
+        this.question = inQuestion;
+        this.variants = inVariants;
+        this.correct = inCorrect;
+        this.link = inLink;
+    }
+
+    public Question() {}
+
     public StringBuilder formatAnswers() {
         StringBuilder result = new StringBuilder();
         for (Object answer : variants) {

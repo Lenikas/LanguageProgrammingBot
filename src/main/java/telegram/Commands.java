@@ -9,8 +9,6 @@ import java.util.Map;
 
 class Commands {
 
-
-
     static SendMessage processHelpCommand(Update update) {
         SendMessage message = getCommandsForHelp();
         Long chatId = update.getMessage().getChatId();
