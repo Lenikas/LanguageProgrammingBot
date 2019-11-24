@@ -10,21 +10,21 @@ public class Question {
     public String correct;
     public String link;
 
-    public void createQuestion(String inQuestion, JSONArray inVariants, String inCorrect, String inLink) {
+    void createQuestion(String inQuestion, JSONArray inVariants, String inCorrect, String inLink) {
         question = inQuestion;
         variants = inVariants;
         correct = inCorrect;
         link = inLink;
     }
 
-    public Question(String inQuestion, JSONArray inVariants, String inCorrect, String inLink) {
+    Question(String inQuestion, JSONArray inVariants, String inCorrect, String inLink) {
         this.question = inQuestion;
         this.variants = inVariants;
         this.correct = inCorrect;
         this.link = inLink;
     }
 
-    public Question() {}
+    Question() {}
 
     public StringBuilder formatAnswers() {
         StringBuilder result = new StringBuilder();

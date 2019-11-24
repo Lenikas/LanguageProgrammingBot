@@ -3,15 +3,14 @@ package telegram;
 import all.DataUser;
 import all.Question;
 import all.WorkWithJson;
-import org.apache.logging.log4j.LogManager;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import java.util.*;
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
 
+import java.io.*;
+import java.util.*;
 
 public class TelegramBot extends TelegramLongPollingBot {
 
@@ -20,8 +19,8 @@ public class TelegramBot extends TelegramLongPollingBot {
     private static final Question[] data_py = WorkWithJson.readJson("question.json");
     private static final Question[] data_sharp = WorkWithJson.readJson("question_sharp.json");
     private static Map<Long, DataUser> map = new HashMap<>();
-    private static ArrayList<String> buttonsAnswerQuestion = new ArrayList<>(Arrays.asList("1", "2", "3", "4"));
-    private static ArrayList<String> buttonsChoseTheme = new ArrayList<>(Arrays.asList("Python", "C#"));
+    private static List<String> buttonsAnswerQuestion = new ArrayList<>(Arrays.asList("1", "2", "3", "4"));
+    private static List<String> buttonsChoseTheme = new ArrayList<>(Arrays.asList("Python", "C#"));
 
 
 
@@ -31,7 +30,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         if (update.hasMessage()) {
             if (update.getMessage().hasText()) {
                 try {
-                    execute(processCommand(update, map, buttonsChoseTheme));
+                    execute(processCommand(update));
                 } catch (TelegramApiException e) {
                     e.printStackTrace();
                 }
@@ -54,7 +53,9 @@ public class TelegramBot extends TelegramLongPollingBot {
                 DataUser user = map.get(chatId);
                 user.setIndex(random.nextInt(user.currentData.length));
                 map.replace(chatId, user);
-                execute(Buttons.sendInlineKeyboardMessage(chatId, WorkWithQuestions.getRandomQuestionWithAnswers(chatId, map), buttonsAnswerQuestion));
+                InlineKeyboardMarkup keyboar = Buttons.sendInlineKeyboardMessage(buttonsAnswerQuestion);
+                //execute(Buttons.sendInlineKeyboardMessage(chatId, WorkWithQuestions.getRandomQuestionWithAnswers(chatId, map), buttonsAnswerQuestion));
+                execute(new SendMessage().setChatId(chatId).setText(WorkWithQuestions.getQuestionWithAnswers(chatId, map)).setReplyMarkup(keyboar));
             }catch (TelegramApiException e) {
                 e.printStackTrace();
             }
@@ -68,10 +69,10 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return TOKEN;
+       return TOKEN;
     }
 
-    private static SendMessage processCommand(Update update, Map<Long, DataUser> map, ArrayList<String> buttonsChoseTheme) {
+    private static SendMessage processCommand(Update update) {
         if (update.getMessage().getText().equals("/help")) {
             return Commands.processHelpCommand(update);
         }
@@ -79,7 +80,9 @@ public class TelegramBot extends TelegramLongPollingBot {
             DataUser newUser = new DataUser(-1);
             Long chatId = update.getMessage().getChatId();
             map.put(chatId, newUser);
-            return Commands.processStartCommand(update,buttonsChoseTheme);
+            InlineKeyboardMarkup keyboardTheme = Buttons.sendInlineKeyboardMessage(buttonsChoseTheme);
+            return new SendMessage().setChatId(chatId).setText("По какому языку вы хотите тест?").setReplyMarkup(keyboardTheme);
+            //return Commands.processStartCommand(update,buttonsChoseTheme);
         }
         if (update.getMessage().getText().equals("/stop")) {
             Long chatId = update.getMessage().getChatId();
