@@ -8,14 +8,10 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
-import java.io.*;
 import java.util.*;
 
 public class TelegramBot extends TelegramLongPollingBot {
 
-    private static final String TOKEN = "902378125:AAFC9rH07vmI4r6yGokf_Wrk3gMVZBKdEa0";
-    private static final String USERNAME = "@language_programming_bot";
     private static final Question[] data_py = WorkWithJson.readJson("question.json");
     private static final Question[] data_sharp = WorkWithJson.readJson("question_sharp.json");
     private static Map<Long, DataUser> map = new HashMap<>();
@@ -64,12 +60,12 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return USERNAME;
+        return Config.Token;
     }
 
     @Override
     public String getBotToken() {
-       return TOKEN;
+       return Config.Name;
     }
 
     private static SendMessage processCommand(Update update) {
