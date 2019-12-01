@@ -10,8 +10,8 @@ import java.util.Map;
 
 class Commands {
 
-    static SendMessage processRatingCommand(Update update, Map<Long, DataUser> map) {
-        Long chatId = update.getMessage().getChatId();
+    static SendMessage processRatingCommand(Long chatId, Map<Long, DataUser> map) {
+        //Long chatId = update.getMessage().getChatId();
         StringBuilder table = new StringBuilder();
         table.append("Рейтинг пользователей:").append("\n");
         for (Long key : map.keySet()) {
@@ -21,20 +21,17 @@ class Commands {
 
     }
 
-    static SendMessage processBallsCommand(Update update, Map<Long, DataUser> map) {
-        Long chatId = update.getMessage().getChatId();
+    static SendMessage processBallsCommand(Long chatId, Map<Long, DataUser> map) {
         return new SendMessage().setText("Количество баллов за правильные ответы в текущую сессию:" + " " + map.get(chatId).countRight).setChatId(chatId);
     }
 
-    static SendMessage processHelpCommand(Update update) {
+    static SendMessage processHelpCommand(Long chatId) {
         SendMessage message = getCommandsForHelp();
-        Long chatId = update.getMessage().getChatId();
         message.setChatId(chatId);
         return message;
     }
 
-    static SendMessage processStopCommand(Update update) {
-        Long chatId = update.getMessage().getChatId();
+    static SendMessage processStopCommand(Long chatId) {
         return new SendMessage().setText("Вы прервали работу бота, чтобы начать снова, введите команду /start").setChatId(chatId);
     }
 

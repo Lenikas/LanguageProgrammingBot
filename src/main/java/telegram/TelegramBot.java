@@ -70,7 +70,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     private static SendMessage processCommand(Update update) {
         if (update.getMessage().getText().equals("/help")) {
-            return Commands.processHelpCommand(update);
+            return Commands.processHelpCommand(update.getMessage().getChatId());
         }
         if (update.getMessage().getText().equals("/start")) {
             Long chatId = update.getMessage().getChatId();
@@ -90,13 +90,13 @@ public class TelegramBot extends TelegramLongPollingBot {
         if (update.getMessage().getText().equals("/stop")) {
             Long chatId = update.getMessage().getChatId();
             map.remove(chatId);
-            return Commands.processStopCommand(update);
+            return Commands.processStopCommand(update.getMessage().getChatId());
         }
         if (update.getMessage().getText().equals("/ballnow")) {
-            return Commands.processBallsCommand(update, map);
+            return Commands.processBallsCommand(update.getMessage().getChatId(), map);
         }
         if (update.getMessage().getText().equals("/rating")) {
-            return Commands.processRatingCommand(update, map);
+            return Commands.processRatingCommand(update.getMessage().getChatId(), map);
         }
         return new SendMessage().setText("Неопознанная команда! Используйте /help для просмотра доступнных комманд.").setChatId(update.getMessage().getChatId());
     }

@@ -16,6 +16,7 @@ class WorkWithQuestions {
         return data_sharp;
     }
 
+
      static String getQuestionWithAnswers(Long chatId, Map<Long, DataUser> map) {
         return map.get(chatId).currentData[map.get(chatId).index].question + "\n"
                 + map.get(chatId).currentData[map.get(chatId).index].formatAnswers();
