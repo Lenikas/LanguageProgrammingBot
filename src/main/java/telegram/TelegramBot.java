@@ -34,7 +34,8 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
         if (update.hasCallbackQuery()) {
             chatId = update.getCallbackQuery().getMessage().getChatId();
-            if (map.get(chatId).index == -1) {
+            if (map.get(chatId).index == -1 || update.getCallbackQuery().getData().equals("Python") ||  update.getCallbackQuery().getData()
+                    .equals("C#")) {
                 map.get(chatId).currentData = WorkWithQuestions.answerOfCheckLanguage(update, data_py, data_sharp);
             }
             else {
@@ -49,9 +50,8 @@ public class TelegramBot extends TelegramLongPollingBot {
                 DataUser user = map.get(chatId);
                 user.setIndex(random.nextInt(user.currentData.length));
                 map.replace(chatId, user);
-                InlineKeyboardMarkup keyboar = Buttons.sendInlineKeyboardMessage(buttonsAnswerQuestion);
-                //execute(Buttons.sendInlineKeyboardMessage(chatId, WorkWithQuestions.getRandomQuestionWithAnswers(chatId, map), buttonsAnswerQuestion));
-                execute(new SendMessage().setChatId(chatId).setText(WorkWithQuestions.getQuestionWithAnswers(chatId, map)).setReplyMarkup(keyboar));
+                InlineKeyboardMarkup keyboard = Buttons.sendInlineKeyboardMessage(buttonsAnswerQuestion);
+                execute(new SendMessage().setChatId(chatId).setText(WorkWithQuestions.getQuestionWithAnswers(chatId, map)).setReplyMarkup(keyboard));
             }catch (TelegramApiException e) {
                 e.printStackTrace();
             }
@@ -60,12 +60,12 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return Config.Token;
+        return Config.Name;
     }
 
     @Override
     public String getBotToken() {
-       return Config.Name;
+       return Config.Token;
     }
 
     private static SendMessage processCommand(Update update) {
@@ -73,17 +73,30 @@ public class TelegramBot extends TelegramLongPollingBot {
             return Commands.processHelpCommand(update);
         }
         if (update.getMessage().getText().equals("/start")) {
-            DataUser newUser = new DataUser(-1);
             Long chatId = update.getMessage().getChatId();
-            map.put(chatId, newUser);
+            if (!map.containsKey(chatId)) {
+                String name = update.getMessage().getChat().getUserName();
+                DataUser newUser = new DataUser(-1, 0, name);
+                map.put(chatId, newUser);
+            }
             InlineKeyboardMarkup keyboardTheme = Buttons.sendInlineKeyboardMessage(buttonsChoseTheme);
             return new SendMessage().setChatId(chatId).setText("По какому языку вы хотите тест?").setReplyMarkup(keyboardTheme);
-            //return Commands.processStartCommand(update,buttonsChoseTheme);
+        }
+        if (update.getMessage().getText().equals("/switch")) {
+            Long chatId = update.getMessage().getChatId();
+            InlineKeyboardMarkup keyboardTheme = Buttons.sendInlineKeyboardMessage(buttonsChoseTheme);
+            return new SendMessage().setChatId(chatId).setText("По какому языку вы хотите тест?").setReplyMarkup(keyboardTheme);
         }
         if (update.getMessage().getText().equals("/stop")) {
             Long chatId = update.getMessage().getChatId();
             map.remove(chatId);
             return Commands.processStopCommand(update);
+        }
+        if (update.getMessage().getText().equals("/ballnow")) {
+            return Commands.processBallsCommand(update, map);
+        }
+        if (update.getMessage().getText().equals("/rating")) {
+            return Commands.processRatingCommand(update, map);
         }
         return new SendMessage().setText("Неопознанная команда! Используйте /help для просмотра доступнных комманд.").setChatId(update.getMessage().getChatId());
     }

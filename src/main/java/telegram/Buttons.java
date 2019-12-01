@@ -19,7 +19,6 @@ class Buttons {
         rowList.add(keyboardButtonsRow);
         inlineKM.setKeyboard(rowList);
         return inlineKM;
-        //return new SendMessage().setChatId(chatId).setText(question).setReplyMarkup(inlineKM);
     }
 
 }

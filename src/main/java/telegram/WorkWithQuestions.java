@@ -24,9 +24,12 @@ class WorkWithQuestions {
 
     static SendMessage processAnswerQuestion(Update update, Long chatId, Map<Long, DataUser> map) {
         if (update.getCallbackQuery().getData().equals(map.get(chatId).currentData[map.get(chatId).index].correct)) {
+            //задать вопрос!
+            map.get(chatId).countRight += 1 ;
             return (new SendMessage().setText("Да, ваш ответ верный!").setChatId(update.getCallbackQuery().getMessage().getChatId()));
         }
         else {
+            map.get(chatId).countRight -= 1 ;
             String str = "Нет, ваш ответ неверный, дополнительная информация на эту тему:" + " "
                     + map.get(chatId).currentData[map.get(chatId).index].link;
             return (new SendMessage().setText(str).setChatId(update.getCallbackQuery().getMessage().getChatId()));
