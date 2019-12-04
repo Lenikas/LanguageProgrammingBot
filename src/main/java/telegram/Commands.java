@@ -2,48 +2,47 @@ package telegram;
 
 import all.DataUser;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 
 import java.util.Map;
 
 
-class Commands {
+/**
+ * Класс с методами, обрабатывающими существубщие команды бота.
+ */
+public class Commands {
 
-    static SendMessage processRatingCommand(Long chatId, Map<Long, DataUser> map) {
-        //Long chatId = update.getMessage().getChatId();
+    public static SendMessage processRatingCommand(Long chatId, Map<Long, DataUser> map) {
         StringBuilder table = new StringBuilder();
         table.append("Рейтинг пользователей:").append("\n");
         for (Long key : map.keySet()) {
-            table.append(map.get(key).userName).append(":").append(map.get(key).countRight).append("\n");
+            table.append(map.get(key).getUserName()).append(":").append(map.get(key).getCountRight()).append("\n");
         }
         return new SendMessage().setText(table.toString()).setChatId(chatId);
 
     }
 
-    static SendMessage processBallsCommand(Long chatId, Map<Long, DataUser> map) {
-        return new SendMessage().setText("Количество баллов за правильные ответы в текущую сессию:" + " " + map.get(chatId).countRight).setChatId(chatId);
+    public static SendMessage processBallsCommand(Long chatId, Map<Long, DataUser> map) {
+        return new SendMessage().setText("Количество баллов за правильные ответы в текущую сессию:" + " " + map.get(chatId).getCountRight()).setChatId(chatId);
     }
 
-    static SendMessage processHelpCommand(Long chatId) {
+    public static SendMessage processHelpCommand(Long chatId) {
         SendMessage message = getCommandsForHelp();
         message.setChatId(chatId);
         return message;
     }
 
-    static SendMessage processStopCommand(Long chatId) {
+    public static SendMessage processStopCommand(Long chatId) {
         return new SendMessage().setText("Вы прервали работу бота, чтобы начать снова, введите команду /start").setChatId(chatId);
     }
 
     private static SendMessage getCommandsForHelp() {
-        StringBuilder text = new StringBuilder();
-        text.append("This is a list of commands bot:").append("\n")
-                .append("/start - запускает цикл вопросов-ответов по языкам программирования")
-                .append("\n").append("/stop - останавливает цикл вопросов-ответов бота").append("\n")
-                .append("/rating - показывает таблицу с количеством правильныз ответов текущих пользователей").append("\n")
-                .append("/ballnow - показывет балл пользователя").append("\n")
-                .append("/switch - дает возможность поменять тему вопросов");
-        return new SendMessage().setText(text.toString());
+        String text = "This is a list of commands bot:" + "\n" +
+                "/start - запускает цикл вопросов-ответов по языкам программирования" +
+                "\n" + "/stop - останавливает цикл вопросов-ответов бота" + "\n" +
+                "/rating - показывает таблицу с количеством правильныз ответов текущих пользователей" + "\n" +
+                "/ballnow - показывет балл пользователя" + "\n" +
+                "/switch - дает возможность поменять тему вопросов";
+        return new SendMessage().setText(text);
     }
 
 }

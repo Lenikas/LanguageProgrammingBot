@@ -1,19 +1,21 @@
-package all;
+package java.all;
 
+import all.Question;
 import org.json.simple.JSONArray;
 import org.junit.jupiter.api.Test;
-import all.Question;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class QuestionTest {
     @Test
     void formatAnswers() {
         Question a = new Question();
-        a.variants = new JSONArray();
-        a.variants.add(0, 3);
-        a.variants.add(1, 1);
-        a.variants.add(2, 2);
-        assertEquals(new StringBuilder("3"+"\n"+"1"+"\n"+"2"+"\n").toString(), a.formatAnswers().toString());
+        JSONArray array = new JSONArray();
+        array.add(0, 3);
+        array.add(1, 1);
+        array.add(2, 2);
+        a.setVariants(array);
+        assertEquals("3" + "\n" + "1" + "\n" + "2" + "\n", a.formatAnswers().toString());
     }
     @Test
     void createQuestion() {
@@ -23,6 +25,6 @@ class QuestionTest {
         variants.add(1, 1);
         variants.add(2, 2);
         question.createQuestion("1",variants, "2", "inLink");
-        assertEquals(new StringBuilder("0"+"\n"+"1"+"\n"+"2"+"\n").toString(), question.formatAnswers().toString());
+        assertEquals("0" + "\n" + "1" + "\n" + "2" + "\n", question.formatAnswers().toString());
     }
 }

@@ -5,6 +5,9 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 
+/**
+ * Запуск бота.
+ */
 public class BotInitializer {
     private static Logger log = Logger.getLogger(BotInitializer.class.getName());
 

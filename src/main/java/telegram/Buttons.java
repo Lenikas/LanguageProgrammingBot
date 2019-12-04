@@ -2,9 +2,13 @@ package telegram;
 
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс, содержащий статический метод для отрисовки кнопок по определенным параметрам.
+ */
 class Buttons {
 
     static InlineKeyboardMarkup sendInlineKeyboardMessage(List<String> dataButtons) {

@@ -4,10 +4,14 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Класс с одним статическим методом, отвечающим за парсинг Jsona, в котором хранятся данные по вопросам,ответам и тд.
+ */
 public class WorkWithJson {
 
     public static Question[] readJson(String theme) {

@@ -4,9 +4,13 @@ import all.DataUser;
 import all.Question;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+
 import java.util.Map;
 
 
+/**
+ * Класс для обработки действий пользователя при ответе на вопросы, нажатия кнопок.
+ */
 class WorkWithQuestions {
 
      static Question[] answerOfCheckLanguage(Update update, Question[] data_py, Question[] data_sharp) {
@@ -18,21 +22,21 @@ class WorkWithQuestions {
 
 
      static String getQuestionWithAnswers(Long chatId, Map<Long, DataUser> map) {
-        return map.get(chatId).currentData[map.get(chatId).index].question + "\n"
-                + map.get(chatId).currentData[map.get(chatId).index].formatAnswers();
+        return map.get(chatId).getCurrentData()[map.get(chatId).getIndex()].getQuestion() + "\n"
+                + map.get(chatId).getCurrentData()[map.get(chatId).getIndex()].formatAnswers();
     }
 
 
     static SendMessage processAnswerQuestion(Update update, Long chatId, Map<Long, DataUser> map) {
-        if (update.getCallbackQuery().getData().equals(map.get(chatId).currentData[map.get(chatId).index].correct)) {
-            //задать вопрос!
-            map.get(chatId).countRight += 1 ;
+        if (update.getCallbackQuery().getData().equals(map.get(chatId).getCurrentData()[map.get(chatId).getIndex()].getCorrect())) {
+            //сделать изменение одного пользователя, а не всей мапки
+            map.get(chatId).changeCount(1);
             return (new SendMessage().setText("Да, ваш ответ верный!").setChatId(update.getCallbackQuery().getMessage().getChatId()));
         }
         else {
-            map.get(chatId).countRight -= 1 ;
+            map.get(chatId).changeCount(-1);
             String str = "Нет, ваш ответ неверный, дополнительная информация на эту тему:" + " "
-                    + map.get(chatId).currentData[map.get(chatId).index].link;
+                    + map.get(chatId).getCurrentData()[map.get(chatId).getIndex()].getLink();
             return (new SendMessage().setText(str).setChatId(update.getCallbackQuery().getMessage().getChatId()));
         }
     }
