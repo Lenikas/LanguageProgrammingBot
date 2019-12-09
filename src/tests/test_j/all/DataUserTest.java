@@ -1,27 +1,27 @@
-package java.all;
+package test_j.all;
 
 import all.DataUser;
 import all.Question;
 import org.json.simple.JSONArray;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-class DataUserTest {
+public class DataUserTest {
 
     @Test
-    void setIndex() {
+    public void setIndex() {
         DataUser user = new DataUser();
         user.setIndex(5);
-        assertEquals(5, user.getIndex());
+        Assert.assertEquals(5, user.getIndex());
+
     }
 
     @Test
-    void setCurrentData() {
+    public void setCurrentData() {
         DataUser user = new DataUser();
         Question[] currentData = new Question[]{new Question("1", new JSONArray(), "2",
                 "Link"), new Question("3", new JSONArray(), "4", "NewLink"),};
         user.setCurrentData(currentData);
-        assertEquals("4", user.getCurrentData()[1].getCorrect());
+        Assert.assertEquals("4", user.getCurrentData()[1].getCorrect());
     }
 }
