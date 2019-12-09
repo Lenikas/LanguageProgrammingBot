@@ -20,7 +20,7 @@
                     <assembleDirectory>target</assembleDirectory>
                     <programs>
                         <program>
-                            <mainClass>BotInitializer</mainClass>
+                            <mainClass>telegram.BotInitializer</mainClass>
                             <name>workerBot</name>
                         </program>
                     </programs>
